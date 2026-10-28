@@ -1,0 +1,30 @@
+name: Build & test PR
+
+on:
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - "LICENCE"
+      - "CODEOWNERS"
+      - ".gitignore"
+      - ".github/workflows/codeql-scan.yaml"
+      - ".github/workflows/dependabot-automerge.yaml"
+      - ".github/workflows/deploy.yaml"
+      - '.github/workflows/digestabot-automerge.yaml'
+      - '.github/workflows/digestabot-update.yaml'
+      - ".github/workflows/manual-deploy.yaml"
+      - ".github/dependabot.yaml"
+      - ".nais/**"
+
+env:
+  TZ: Europe/Oslo
+
+jobs:
+  build-test-pr:
+    permissions:
+      contents: read
+    name: Build & test application
+    uses: navikt/beregningsplattform-gha-workflows/.github/workflows/node-build-pr.yaml@4b5f646b98c40ca503e95c98af57b2ed4b602805 # ratchet:navikt/beregningsplattform-gha-workflows/.github/workflows/node-build-pr.yaml@v1.1.2
+    with:
+      has-playwright: true
+    secrets: inherit
