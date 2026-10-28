@@ -1,28 +1,28 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: sokos-react-template
-  namespace: beregningsplattform
+  name: up-ske-krav-avstemming-data
+  namespace: okonomi
   labels:
-    team: beregningsplattform
+    team: okonomi
 spec:
   image: "{{ image }}"
   port: 8080
   liveness:
-    path: /sokos-react-template/internal/isAlive
+    path: /ske-krav-avstemming-data/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /sokos-react-template/internal/isReady
+    path: /ske-krav-avstemming-data/internal/isReady
     initialDelay: 10
   prometheus:
     enabled: true
-    path: /sokos-react-template/internal/metrics
+    path: /ske-krav-avstemming-data/internal/metrics
   replicas:
     min: 1
     max: 2
   ingresses:
-    - "https://utbetalingsportalen.intern.dev.nav.no/sokos-react-template"
-    - "https://utbetalingsportalen.ansatt.dev.nav.no/sokos-react-template"
+    - "https://utbetalingsportalen.intern.dev.nav.no/ske-krav-avstemming-data"
+    - "https://utbetalingsportalen.ansatt.dev.nav.no/ske-krav-avstemming-data"
   resources:
     limits:
       memory: 512Mi

@@ -1,7 +1,7 @@
 {
-	"name": "sokos-react-template-server",
+	"name": "up-ske-krav-avstemming-data-server",
 	"version": "1.0.0",
-	"description": "Server for sokos-react-template",
+	"description": "Server for up-ske-krav-avstemming-data",
 	"type": "module",
 	"main": "build/server.js",
 	"scripts": {

@@ -1,5 +1,5 @@
-import TemplatePage from "./pages/TemplatePage";
+import AvstemmingDataPage from "./pages/AvstemmingDataPage";
 
 export default function App() {
-	return <TemplatePage />;
+	return <AvstemmingDataPage />;
 }

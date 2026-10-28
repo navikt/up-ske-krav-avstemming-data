@@ -1,9 +1,10 @@
 import useSWRImmutable from "swr/immutable";
-import type { EmployeeList } from "../types/Employee";
 import { axiosFetcher } from "./config/apiConfig";
+import {DateRange} from "../pages/AvstemmingDataPage";
+import {AvstemmingsgrunnlagDto} from "../types/schema/Avstemmingsgrunnlag";
 
 const BASE_URI = {
-	BACKEND_API: "/mikrofrontend-api/api/v1",
+	BACKEND_API: "/ske-krav/api/v1",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
@@ -15,14 +16,12 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
 	};
 }
 
-export function useGetEmployee() {
-	const { data, error, isValidating } = useSWRImmutable<EmployeeList>(
-		`/employee`,
-		swrConfig<EmployeeList>((url) =>
-			axiosFetcher<EmployeeList>(BASE_URI.BACKEND_API, url),
+export function useGetAvstemmingsdata(dateRange:DateRange|null, shouldFetch:boolean) {
+	const { data, error, isLoading } = useSWRImmutable<Array<AvstemmingsgrunnlagDto>>(
+		!shouldFetch ? null : `/rapporter/avstemming/oversikt/${dateRange?.from.toISOString().slice(0,10)}/${dateRange.to?.toISOString().slice(0,10) ?? ""})`,
+		swrConfig<Array<AvstemmingsgrunnlagDto>>((url) =>
+			axiosFetcher<Array<AvstemmingsgrunnlagDto>>(BASE_URI.BACKEND_API, url),
 		),
 	);
-	const isLoading = (!error && !data) || isValidating;
-
-	return { data, error, isLoading };
+	return {data: data ?? [], error, isLoading };
 }
