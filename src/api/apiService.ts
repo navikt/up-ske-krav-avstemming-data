@@ -18,7 +18,7 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
 
 export function useGetAvstemmingsdata(dateRange:DateRange|null, shouldFetch:boolean) {
 	const { data, error, isLoading } = useSWRImmutable<Array<AvstemmingsgrunnlagDto>>(
-		!shouldFetch ? null : `/rapporter/avstemming/oversikt/${dateRange?.from.toISOString().slice(0,10)}/${dateRange.to?.toISOString().slice(0,10) ?? ""})`,
+		!shouldFetch ? null : `/rapporter/avstemming/oversikt/${dateRange?.from.toISOString().slice(0,10)}/${dateRange?.to?.toISOString().slice(0,10) ?? ""}`,
 		swrConfig<Array<AvstemmingsgrunnlagDto>>((url) =>
 			axiosFetcher<Array<AvstemmingsgrunnlagDto>>(BASE_URI.BACKEND_API, url),
 		),
