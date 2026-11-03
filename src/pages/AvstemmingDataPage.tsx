@@ -1,7 +1,7 @@
 import {DatePicker, Heading, Loader, Table} from "@navikt/ds-react";
 import {useGetAvstemmingsdata} from "../api/apiService";
-import {useEffect, useState} from "react";
-import {KravDto} from "../types/schema/Avstemmingsgrunnlag";
+import {useState} from "react";
+import type {KravDto} from "../types/schema/Avstemmingsgrunnlag";
 
 export type DateRange = {
     from: Date;
@@ -10,27 +10,20 @@ export type DateRange = {
 
 export default function AvstemmingDataPage() {
     const [dateRange, setDateRange] = useState<DateRange | null>(null);
- 	const [shouldFetch, setShouldFetch] = useState<boolean>(false);
-    const {data, isLoading} = useGetAvstemmingsdata(dateRange, shouldFetch);
-    useEffect(() => {
-        if (dateRange?.from && dateRange?.to) {
-            setShouldFetch(true);
-        }
-    }, [dateRange]);
+    const {data, isLoading} = useGetAvstemmingsdata(dateRange, !!dateRange?.from && !!dateRange?.to);
 	if (isLoading) {
         return (
                 <Loader size="3xlarge" title="Henter data..."/>
         );
     }
-
+    
     return (
         <>
             <Heading spacing level="1" size="large">
                 Avstemmingsdata fra Ske-Krav
             </Heading>
-            <DatePicker.Standalone mode={"range"} onSelect={(dateRange) =>
-                dateRange ? setDateRange({from: dateRange.from ?? new Date(), to: dateRange.to}) : null}/>
-
+            <DatePicker.Standalone mode={"range"} onSelect={(dateRange) => {
+                setDateRange({from: dateRange?.from ?? new Date(), to: dateRange?.to})}}/>
             <Table>
                 <Table.Header>
                     <Table.Row>
