@@ -19,15 +19,15 @@
 		"@navikt/aksel-icons": "8.19.1",
 		"@navikt/ds-css": "8.19.1",
 		"@navikt/ds-react": "8.19.1",
-		"axios": "1.20.0",
+		"axios": "1.21.0",
 		"react": "19.3.0",
 		"react-dom": "19.3.0",
 		"swr": "2.5.1",
 		"zod": "4.6.7"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
-		"@axe-core/playwright": "4.13.0",
+		"@biomejs/biome": "2.6.3",
+		"@axe-core/playwright": "4.14.0",
 		"@navikt/aksel-stylelint": "8.19.1",
 		"@playwright/test": "1.64.1",
 		"@types/node": "26.6.5",
@@ -40,8 +40,8 @@
 		"stylelint": "17.16.0",
 		"stylelint-config-standard": "40.0.0",
 		"typescript": "7.0.2",
-		"vite": "8.3.4",
-		"vite-plugin-css-injected-by-js": "5.0.2"
+		"vite": "8.3.5",
+		"vite-plugin-css-injected-by-js": "5.0.3"
 	},
 	"msw": {
 		"workerDirectory": [
