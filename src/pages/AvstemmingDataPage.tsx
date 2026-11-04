@@ -19,7 +19,7 @@ export default function AvstemmingDataPage() {
             <Loader size="3xlarge" title="Henter data..."/>
         );
     }
-    
+
     return (
         <>
             <Box marginInline={"auto"} padding="space-16">
@@ -28,22 +28,22 @@ export default function AvstemmingDataPage() {
                 </Heading>
                 <Box padding="space-24" background={"meta-purple-soft"} borderRadius="8">
                     <HStack align={"end"} gap={"space-16"}>
-                    <DatePicker.Standalone mode={"range"} onSelect={(dateRange) => {
-                        setDateRange({from: dateRange?.from ?? new Date(), to: dateRange?.to})
-                    }}/>
+                        <DatePicker.Standalone mode={"range"} onSelect={(dateRange) => {
+                            setDateRange({from: dateRange?.from ?? new Date(), to: dateRange?.to})
+                        }}/>
                         <VStack align={"end"}>
-                    <Button
-                        data-umami-event={"eksportert til excel"}
-                        size={"small"}
-                        variant={"primary"}
-                        icon={<FileCsvIcon title="Til Excel" fontSize="1.5rem"/>}
-                        iconPosition={"right"}
-                        onClick={() =>
-                            downloadAsCsv(toLocalShortDate(dateRange?.from), toLocalShortDate(dateRange?.to), data ?? [])
-                        }
-                    >
-                        Til Excel
-                    </Button>
+                            <Button
+                                data-umami-event={"eksportert til excel"}
+                                size={"small"}
+                                variant={"primary"}
+                                icon={<FileCsvIcon title="Til Excel" fontSize="1.5rem"/>}
+                                iconPosition={"right"}
+                                onClick={() =>
+                                    downloadAsCsv(toLocalShortDate(dateRange?.from), toLocalShortDate(dateRange?.to), data ?? [])
+                                }
+                            >
+                                Til Excel
+                            </Button>
                         </VStack>
                     </HStack>
                 </Box>
