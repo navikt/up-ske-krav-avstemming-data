@@ -24,7 +24,5 @@ jobs:
     permissions:
       contents: read
     name: Build & test application
-    uses: navikt/beregningsplattform-gha-workflows/.github/workflows/node-build-pr.yaml@4b5f646b98c40ca503e95c98af57b2ed4b602805 # ratchet:navikt/beregningsplattform-gha-workflows/.github/workflows/node-build-pr.yaml@v1.1.2
-    with:
-      has-playwright: true
+    uses: navikt/skatt-og-trekk-gha-workflows/.github/workflows/gradle-build-test-app.yaml@f6a6b44d0edd525d7cc0614394a4af5a2b7ea04d # ratchet:navikt/skatt-og-trekk-gha-workflows/.github/workflows/gradle-build-test-app.yaml@v1.2.2
     secrets: inherit
