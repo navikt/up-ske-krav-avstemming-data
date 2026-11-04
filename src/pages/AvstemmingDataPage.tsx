@@ -1,7 +1,10 @@
-import {DatePicker, Heading, Loader, Table} from "@navikt/ds-react";
+import {Box, Button, DatePicker, Heading, HStack, Loader, Table, VStack} from "@navikt/ds-react";
 import {useGetAvstemmingsdata} from "../api/apiService";
 import {useState} from "react";
-import type {KravDto} from "../types/schema/Avstemmingsgrunnlag";
+import type {KravDto} from "../types/schema/Krav";
+import {downloadAsCsv} from "../utils/csvExport";
+import {FileCsvIcon} from "@navikt/aksel-icons";
+import {toLocalShortDate} from "../utils/dates";
 
 export type DateRange = {
     from: Date;
@@ -11,19 +14,40 @@ export type DateRange = {
 export default function AvstemmingDataPage() {
     const [dateRange, setDateRange] = useState<DateRange | null>(null);
     const {data, isLoading} = useGetAvstemmingsdata(dateRange, !!dateRange?.from && !!dateRange?.to);
-	if (isLoading) {
+    if (isLoading) {
         return (
-                <Loader size="3xlarge" title="Henter data..."/>
+            <Loader size="3xlarge" title="Henter data..."/>
         );
     }
     
     return (
         <>
-            <Heading spacing level="1" size="large">
-                Avstemmingsdata fra Ske-Krav
-            </Heading>
-            <DatePicker.Standalone mode={"range"} onSelect={(dateRange) => {
-                setDateRange({from: dateRange?.from ?? new Date(), to: dateRange?.to})}}/>
+            <Box marginInline={"auto"} padding="space-16">
+                <Heading spacing level="1" size="large">
+                    Avstemmingsdata fra Ske-Krav
+                </Heading>
+                <Box padding="space-24" background={"meta-purple-soft"} borderRadius="8">
+                    <HStack align={"end"} gap={"space-16"}>
+                    <DatePicker.Standalone mode={"range"} onSelect={(dateRange) => {
+                        setDateRange({from: dateRange?.from ?? new Date(), to: dateRange?.to})
+                    }}/>
+                        <VStack align={"end"}>
+                    <Button
+                        data-umami-event={"eksportert til excel"}
+                        size={"small"}
+                        variant={"primary"}
+                        icon={<FileCsvIcon title="Til Excel" fontSize="1.5rem"/>}
+                        iconPosition={"right"}
+                        onClick={() =>
+                            downloadAsCsv(toLocalShortDate(dateRange?.from), toLocalShortDate(dateRange?.to), data ?? [])
+                        }
+                    >
+                        Til Excel
+                    </Button>
+                        </VStack>
+                    </HStack>
+                </Box>
+            </Box>
             <Table>
                 <Table.Header>
                     <Table.Row>

@@ -31,9 +31,9 @@ export default defineConfig(({ mode }) => ({
 	server: {
 		proxy: {
 			...(mode === "backend" && {
-				"/ske-krav/api/v1": {
+				"/ske-krav/": {
 					target: "http://localhost:8080",
-					rewrite: (path: string) => path.replace(/^\/oppdrag-api/, ""),
+					rewrite: (path: string) => path.replace(/^\/ske-krav/, ""),
 					changeOrigin: true,
 					secure: false,
 				},
