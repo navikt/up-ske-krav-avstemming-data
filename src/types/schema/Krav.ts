@@ -15,7 +15,7 @@ export const KravDTOSchema = z.object({
 	arsaksKode: z.string(),
 	vedtakFraDato: z.string(),
 	vedtakTilDato: z.string(),
-	transaksjonsDarto: z.string(),
+	transaksjonsDato: z.string(),
 	datafil: z.string(),
 	kilde: z.string(),
 });

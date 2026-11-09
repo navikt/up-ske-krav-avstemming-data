@@ -85,7 +85,7 @@ export default function AvstemmingDataPage() {
                             <Table.DataCell>{krav.arsaksKode}</Table.DataCell>
                             <Table.DataCell>{krav.vedtakFraDato}</Table.DataCell>
                             <Table.DataCell>{krav.vedtakTilDato}</Table.DataCell>
-                            <Table.DataCell>{krav.transaksjonsDarto}</Table.DataCell>
+                            <Table.DataCell>{krav.transaksjonsDato}</Table.DataCell>
                             <Table.DataCell>{krav.datafil}</Table.DataCell>
                             <Table.DataCell>{krav.kilde}</Table.DataCell>
                         </Table.Row>

@@ -43,7 +43,7 @@ function createCsv(krav: Array<KravDto>) {
 			k.arsaksKode,
 			k.vedtakFraDato,
 			k.vedtakTilDato,
-			k.transaksjonsDarto,
+			k.transaksjonsDato,
 			k.datafil,
 			k.kilde,
 		]
