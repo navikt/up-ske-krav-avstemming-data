@@ -20,11 +20,10 @@ export default function AvstemmingDataPage() {
     }
     return (
         <>
-            <Box marginInline={"auto"} padding="space-16">
                 <Heading spacing level="1" size="large">
                     Avstemmingsdata fra Ske-Krav
                 </Heading>
-                <Box padding="space-24" background={"meta-purple-soft"} borderRadius="8">
+                <Box background={"meta-purple-soft"} borderRadius="8" padding="space-24">
                     <HStack align={"end"} gap={"space-16"}>
                         <DatePicker.Standalone mode={"range"} onSelect={(dateRange) => {
                             setDateRange({from: dateRange?.from ?? new Date(), to: dateRange?.to})
@@ -45,8 +44,8 @@ export default function AvstemmingDataPage() {
                         </VStack>
                     </HStack>
                 </Box>
-            </Box>
-            <Table>
+            <Box padding="space-24" background={"default"} borderRadius="8">
+            <Table zebraStripes>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell scope="col">Gjelder-ID</Table.HeaderCell>
@@ -69,9 +68,9 @@ export default function AvstemmingDataPage() {
                     </Table.Row>
                 </Table.Header>
 
-                <Table.Body>
+                <Table.Body >
                     {data?.map((krav) => (
-                        <Table.Row key={`${krav.gjelderID}-${krav.saksnummer}`}>
+                        <Table.Row key={`${krav.datafil}-${krav.saksnummer}`}>
                             <Table.DataCell>{krav.gjelderID}</Table.DataCell>
                             <Table.DataCell>{krav.vedtaksDato}</Table.DataCell>
                             <Table.DataCell>{krav.saksnummer}</Table.DataCell>
@@ -93,6 +92,7 @@ export default function AvstemmingDataPage() {
                     ))}
                 </Table.Body>
             </Table>
+            </Box>
         </>
     );
 }

@@ -1,75 +1,51 @@
-import type {KravDto} from "../types/schema/Krav";
-import {toLocalShortDate} from "./dates";
+import type { KravDto } from "../types/schema/Krav";
+import { toLocalShortDate } from "./dates";
 
 function createCsv(krav: Array<KravDto>) {
 	const csvHeaders = [
-		"Avsender",
+		"Gjelder-ID",
+		"Vedtaksdato",
+		"Saksnummer",
+		"Referanse gammelt vedtak",
 		"Beløp",
-		"Beløp renter",
-		"Corr-ID",
+		"Renter",
+		"Total sum",
 		"Behandlende enhet",
 		"Bostedsenhet",
-		"Fagsystem-ID",
-		"Filnavn",
-		"Fremtidig ytelse",
-		"Gjelder-ID",
+		"Ytelseskode",
+		"Lovhjemmel",
 		"Årsakskode",
-		"Hjemmelkode",
-		"Krav-ID",
-		"Kravidentifikator SKE",
-		"Kravkode",
-		"Kravtype",
-		"Linjenummer",
-		"Periode fra",
-		"Periode til",
-		"Referansenummer gammel sak",
-		"Saksnummer NAV",
-		"Status",
-		"Opprettet",
-		"Sendt",
-		"Siste status",
-		"Tilleggsfrist",
+		"Vedtak fra dato",
+		"Vedtak til dato",
 		"Transaksjonsdato",
-		"Utbetalingsdato",
-		"Vedtaksdato",
+		"Datafil",
+		"Kilde",
 	].join(";");
 
-	const csvValue = (value: string | number | undefined) => {
-		const text = value?.toString() ?? "";
+	const csvValue = (value: string | number) => {
+		const text = value ? `${value}` : "";
 		return /[;"\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 	};
 
 	const csvData = krav.map((k) =>
 		[
-			k.avsender,
-			k.belop,
-			k.belopRente,
-			k.corrId,
-			k.enhetBehandlende,
-			k.enhetBosted,
-			k.fagsystemId,
-			k.filnavn,
-			k.fremtidigYtelse,
-			String(k.gjelderId).padStart(11, '0'),
-			k.kodeArsak,
-			k.kodeHjemmel,
-			k.kravId,
-			k.kravidentifikatorSKE,
-			k.kravkode,
-			k.kravtype,
-			k.linjenummer,
-			k.periodeFOM,
-			k.periodeTOM,
-			k.referansenummerGammelSak,
-			k.saksnummerNAV,
-			k.status,
-			k.tidspunktOpprettet,
-			k.tidspunktSendt,
-			k.tidspunktSisteStatus,
-			k.tilleggsfrist,
-			k.transaksjonsDato,
-			k.utbetalDato,
+			k.gjelderID,
 			k.vedtaksDato,
+			k.saksnummer,
+			k.referanseGammeltVedtak,
+			k.belop,
+			k.renter,
+			k.totalSum,
+			k.behandlendeEnhet,
+			k.bostedEnhet,
+			k.ytelseKode,
+			k.lovHjemmel,
+			k.arsaksKode,
+			k.vedtakFraDato,
+			k.vedtakTilDato,
+			k.transaksjonsDarto,
+			k.datafil,
+			k.kilde,
 		]
 			.map(csvValue)
 			.join(";"),
