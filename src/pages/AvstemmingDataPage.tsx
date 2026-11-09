@@ -1,7 +1,6 @@
 import {Box, Button, DatePicker, Heading, HStack, Loader, Table, VStack} from "@navikt/ds-react";
 import {useGetAvstemmingsdata} from "../api/apiService";
 import {useState} from "react";
-import type {KravDto} from "../types/schema/Krav";
 import {downloadAsCsv} from "../utils/csvExport";
 import {FileCsvIcon} from "@navikt/aksel-icons";
 import {toLocalShortDate} from "../utils/dates";
@@ -19,7 +18,6 @@ export default function AvstemmingDataPage() {
             <Loader size="3xlarge" title="Henter data..."/>
         );
     }
-
     return (
         <>
             <Box marginInline={"auto"} padding="space-16">
@@ -51,74 +49,48 @@ export default function AvstemmingDataPage() {
             <Table>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell scope="col">Avsender</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Gjelder-ID</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Vedtaksdato</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Saksnummer</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Referanse gammelt vedtak</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Beløp</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Beløp renter</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Corr-ID</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Renter</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Total sum</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Behandlende enhet</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Bostedsenhet</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Fagsystem-ID</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Filnavn</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Fremtidig ytelse</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Gjelder-ID</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Ytelseskode</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Lovhjemmel</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Årsakskode</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Hjemmelkode</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Krav-ID</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Kravidentifikator SKE</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Kravkode</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Kravtype</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Linjenummer</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Periode fra</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Periode til</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Referansenummer gammel sak</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Saksnummer NAV</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Status</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Opprettet</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Sendt</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Siste status</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Tilleggsfrist</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Vedtak fra dato</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Vedtak til dato</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Transaksjonsdato</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Utbetalingsdato</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Vedtaksdato</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Datafil</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Kilde</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
-                    {data?.map((avstemmingsgrunnlag: KravDto) => {
-                        return (
-                            <Table.Row key={avstemmingsgrunnlag.kravId}>
-                                <Table.DataCell>{avstemmingsgrunnlag.avsender}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.belop}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.belopRente}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.corrId}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.enhetBehandlende}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.enhetBosted}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.fagsystemId}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.filnavn}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.fremtidigYtelse}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.gjelderId}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.kodeArsak}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.kodeHjemmel}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.kravId}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.kravidentifikatorSKE}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.kravkode}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.kravtype}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.linjenummer}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.periodeFOM}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.periodeTOM}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.referansenummerGammelSak}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.saksnummerNAV}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.status}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.tidspunktOpprettet}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.tidspunktSendt}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.tidspunktSisteStatus}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.tilleggsfrist}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.transaksjonsDato}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.utbetalDato}</Table.DataCell>
-                                <Table.DataCell>{avstemmingsgrunnlag.vedtaksDato}</Table.DataCell>
-                            </Table.Row>
-                        );
-                    })}
+                    {data?.map((krav) => (
+                        <Table.Row key={`${krav.gjelderID}-${krav.saksnummer}`}>
+                            <Table.DataCell>{krav.gjelderID}</Table.DataCell>
+                            <Table.DataCell>{krav.vedtaksDato}</Table.DataCell>
+                            <Table.DataCell>{krav.saksnummer}</Table.DataCell>
+                            <Table.DataCell>{krav.referanseGammeltVedtak}</Table.DataCell>
+                            <Table.DataCell>{krav.belop}</Table.DataCell>
+                            <Table.DataCell>{krav.renter}</Table.DataCell>
+                            <Table.DataCell>{krav.totalSum}</Table.DataCell>
+                            <Table.DataCell>{krav.behandlendeEnhet}</Table.DataCell>
+                            <Table.DataCell>{krav.bostedEnhet}</Table.DataCell>
+                            <Table.DataCell>{krav.ytelseKode}</Table.DataCell>
+                            <Table.DataCell>{krav.lovHjemmel}</Table.DataCell>
+                            <Table.DataCell>{krav.arsaksKode}</Table.DataCell>
+                            <Table.DataCell>{krav.vedtakFraDato}</Table.DataCell>
+                            <Table.DataCell>{krav.vedtakTilDato}</Table.DataCell>
+                            <Table.DataCell>{krav.transaksjonsDarto}</Table.DataCell>
+                            <Table.DataCell>{krav.datafil}</Table.DataCell>
+                            <Table.DataCell>{krav.kilde}</Table.DataCell>
+                        </Table.Row>
+                    ))}
                 </Table.Body>
             </Table>
         </>
