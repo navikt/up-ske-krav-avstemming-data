@@ -24,11 +24,32 @@ spec:
     min: 2
     max: 2
   ingresses:
-    - "https://utbetalingsportalen.intern.nav.no/up-ske-krav-avstemming-data"
-    - "https://utbetalingsportalen.ansatt.nav.no/up-ske-krav-avstemming-data"
+    - "https://up-ske-krav-avstemming-data.intern.nav.no/up-ske-krav-avstemming-data"
+    - "https://up-ske-krav-avstemming-data.ansatt.nav.no/up-ske-krav-avstemming-data"
   resources:
     limits:
       memory: 512Mi
     requests:
       cpu: 50m
       memory: 128Mi
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: false
+      claims:
+        groups:
+          - id: "5528b7f1-63f4-4d40-bf07-b8b9364017e4" # 0000-CA-UP-SKE-KRAV-AVSTEMMING-DATA-READ
+        extra:
+          - NAVident
+    sidecar:
+      enabled: true
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /internal/*
+  accessPolicy:
+    outbound:
+      external:
+        - host: sokos-ske-krav.intern.nav.no
+      rules:
+        - application: sokos-ske-krav
+          namespace: okonomi

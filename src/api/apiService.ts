@@ -21,7 +21,7 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
 
 export function useGetAvstemmingsdata(dateRange:DateRange|null, shouldFetch:boolean) {
 	const { data, error, isLoading } = useSWRImmutable<Array<KravDto>>(
-		shouldFetch ? `/rapporter/avstemming/oversikt/${toLocalISODate(dateRange?.from)}/${toLocalISODate(dateRange?.to)}` : null,
+		shouldFetch ? `/api/up-tilbakekreving/${toLocalISODate(dateRange?.from)}/${toLocalISODate(dateRange?.to)}` : null,
 		swrConfig<Array<KravDto>>((url) =>
 			axiosFetcher<Array<KravDto>>(BASE_URI.BACKEND_API, url),
 		),
