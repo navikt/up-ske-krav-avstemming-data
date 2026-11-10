@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 export default defineConfig(({ mode }) => ({
-	base: "/ske-krav-avstemming-data",
+	base: "/up-ske-krav-avstemming-data",
 	build: {
 		copyPublicDir: false,
 		rolldownOptions: {

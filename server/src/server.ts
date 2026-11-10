@@ -108,7 +108,9 @@ server.use("/api", async (req, res, next) => {
 server.get(`${basePath}/internal/isAlive`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
-
+server.get(`${basePath}/internal/foo`, (_req: Request, res: Response) => {
+	res.send("Foo");
+});
 server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
