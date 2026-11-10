@@ -3,20 +3,17 @@ import path from "node:path";
 import { getToken, requestOboToken } from "@navikt/oasis";
 import express, { type Request, type Response } from "express";
 import expressStaticGzip from "express-static-gzip";
+import { backendConfig } from "./backendConfig.js";
 import { getServerSideEnvironment } from "./environment.js";
 
 const basePath = "/up-ske-krav-avstemming-data";
 const buildPath = path.resolve(import.meta.dirname, "../dist");
 const server = express();
 const env = getServerSideEnvironment();
-const apiTarget =
-	(env==="development") ? new URL("https://sokos-ske-krav.intern.dev.nav.no")
-		: (env==="production") ? new URL("https://sokos-ske-krav.intern.nav.no")
-			: new URL("http://localhost:8080");
-const oboAudience =
-	(env==="development") ? "api://dev-gcp.okonomi.sokos-ske-krav/.default"
-		: (env==="production") ? "api://prod-gcp.okonomi.sokos-ske-krav/.default"
-			: "sokos-ske-krav";
+
+const backend = backendConfig[env];
+const apiTarget = new URL(backend.url);
+const oboAudience = backend.audience;
 
 const corsAllowedOrigins: (string | RegExp)[] = [
 	/^https:\/\/sokos-ske-krav(?:-q[a-z0-9]+)?\.(?:ansatt|intern)(?:\.dev)?\.nav\.no$/,
@@ -42,7 +39,7 @@ server.use((req, res, next) => {
 	next();
 });
 
-server.use("/api", async (req, res, next) => {
+server.use(`${basePath}/ske-krav/api`, async (req, res, next) => {
 	const incomingToken = getToken(req);
 	if (!incomingToken) {
 		res.status(401).json({ message: "Mangler innkommende brukertoken" });
@@ -64,7 +61,7 @@ server.use("/api", async (req, res, next) => {
 			protocol: apiTarget.protocol,
 			hostname: apiTarget.hostname,
 			method: req.method,
-			path: req.originalUrl,
+			path: `/api${req.url.replace(`${basePath}/ske-krav`, "")}`,
 			headers: {
 				...req.headers,
 				authorization: `Bearer ${oboTokenResult.token}`,
@@ -108,9 +105,7 @@ server.use("/api", async (req, res, next) => {
 server.get(`${basePath}/internal/isAlive`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
-server.get(`${basePath}/internal/foo`, (_req: Request, res: Response) => {
-	res.send("Foo");
-});
+
 server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });

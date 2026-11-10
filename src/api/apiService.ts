@@ -5,7 +5,7 @@ import { axiosFetcher } from "./config/apiConfig";
 import {toLocalISODate} from "../utils/dates";
 
 const BASE_URI = {
-	BACKEND_API: "/ske-krav",
+	BACKEND_API: "/up-ske-krav-avstemming-data/ske-krav",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
