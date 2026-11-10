@@ -8,7 +8,7 @@ const startMsw = async () => {
 		try {
 			const { worker } = await import("../mock/browser");
 			await worker.start({
-				onUnhandledRequest: "bypass",
+				onUnhandledFrame: "bypass",
 			});
 		} catch (error) {
 			// biome-ignore lint/suspicious/noConsole: debug code
