@@ -5,24 +5,6 @@ import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 export default defineConfig(({ mode }) => ({
 	base: "/up-ske-krav-avstemming-data",
-	build: {
-		copyPublicDir: false,
-		rolldownOptions: {
-			input: resolve(import.meta.dirname, "src/App.tsx"),
-			preserveEntrySignatures: "exports-only",
-			external: [
-				"react",
-				"react/jsx-runtime",
-				"react-dom",
-				"react-dom/client",
-				"scheduler",
-			],
-			output: {
-				entryFileNames: "bundle.js",
-				format: "esm",
-			},
-		},
-	},
 	css: {
 		modules: {
 			generateScopedName: "[name]__[local]___[hash:base64:5]",
