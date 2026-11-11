@@ -56,12 +56,16 @@ server.use(`${basePath}/ske-krav/api`, async (req, res, next) => {
 		return;
 	}
 
+	console.info(`${req.url.replace(`${basePath}/ske-krav`, "")}`)
+	console.info(`original url: `, req.url)
+	
+	
 	const proxyRequest = https.request(
 		{
 			protocol: apiTarget.protocol,
 			hostname: apiTarget.hostname,
 			method: req.method,
-			path: `/api${req.url.replace(`${basePath}/ske-krav`, "")}`,
+			path: `${req.url.replace(`${basePath}/ske-krav`, "")}`,
 			headers: {
 				...req.headers,
 				authorization: `Bearer ${oboTokenResult.token}`,
