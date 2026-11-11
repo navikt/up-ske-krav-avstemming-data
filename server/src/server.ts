@@ -39,7 +39,7 @@ server.use((req, res, next) => {
 	next();
 });
 
-server.use(`${basePath}/ske-krav/api`, async (req, res, next) => {
+server.use(`${basePath}/ske-krav`, async (req, res, next) => {
 	const incomingToken = getToken(req);
 	if (!incomingToken) {
 		res.status(401).json({ message: "Mangler innkommende brukertoken" });
