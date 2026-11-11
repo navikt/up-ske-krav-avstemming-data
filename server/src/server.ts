@@ -56,7 +56,7 @@ server.use(`${basePath}/ske-krav/api`, async (req, res, next) => {
 		return;
 	}
 
-	console.info(`${req.url.replace(`${basePath}/ske-krav`, "")}`)
+	console.info("hostname: ", apiTarget.hostname)
 	console.info(`original url: `, req.url)
 	
 	
@@ -65,7 +65,7 @@ server.use(`${basePath}/ske-krav/api`, async (req, res, next) => {
 			protocol: apiTarget.protocol,
 			hostname: apiTarget.hostname,
 			method: req.method,
-			path: `${req.url.replace(`${basePath}/ske-krav`, "")}`,
+			path: req.url,
 			headers: {
 				...req.headers,
 				authorization: `Bearer ${oboTokenResult.token}`,
