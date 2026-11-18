@@ -23,6 +23,8 @@ spec:
   ingresses:
     - "https://up-ske-krav-avstemming-data.intern.dev.nav.no/ske-krav-avstemming-data"
     - "https://up-ske-krav-avstemming-data.ansatt.dev.nav.no/ske-krav-avstemming-data"
+    - "https://up-ske-krav-avstemming-data.intern.dev.nav.no/ske-krav"
+    - "https://up-ske-krav-avstemming-data.ansatt.dev.nav.no/ske-krav"
   resources:
     limits:
       memory: 512Mi
