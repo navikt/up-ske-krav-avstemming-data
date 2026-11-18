@@ -6,7 +6,7 @@ import expressStaticGzip from "express-static-gzip";
 import { backendConfig } from "./backendConfig.js";
 import { getServerSideEnvironment } from "./environment.js";
 
-const basePath = "/up-ske-krav-avstemming-data";
+const basePath = "/ske-krav-avstemming-data";
 const buildPath = path.resolve(import.meta.dirname, "../dist");
 const server = express();
 const env = getServerSideEnvironment();
@@ -56,10 +56,6 @@ server.use(`${basePath}/ske-krav`, async (req, res, next) => {
 		return;
 	}
 
-	console.info("hostname: ", apiTarget.hostname)
-	console.info(`original url: `, req.url)
-	
-	
 	const proxyRequest = https.request(
 		{
 			protocol: apiTarget.protocol,

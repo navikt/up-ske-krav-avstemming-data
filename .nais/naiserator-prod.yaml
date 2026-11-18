@@ -12,20 +12,20 @@ spec:
   image: "{{ image }}"
   port: 8080
   liveness:
-    path: /up-ske-krav-avstemming-data/internal/isAlive
+    path: /ske-krav-avstemming-data/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /up-ske-krav-avstemming-data/internal/isReady
+    path: /ske-krav-avstemming-data/internal/isReady
     initialDelay: 10
   prometheus:
     enabled: true
-    path: /up-ske-krav-avstemming-data/internal/metrics
+    path: /ske-krav-avstemming-data/internal/metrics
   replicas:
     min: 2
     max: 2
   ingresses:
-    - "https://up-ske-krav-avstemming-data.intern.nav.no/up-ske-krav-avstemming-data"
-    - "https://up-ske-krav-avstemming-data.ansatt.nav.no/up-ske-krav-avstemming-data"
+    - "https://up-ske-krav-avstemming-data.intern.nav.no/ske-krav-avstemming-data"
+    - "https://up-ske-krav-avstemming-data.ansatt.nav.no/ske-krav-avstemming-data"
   resources:
     limits:
       memory: 512Mi
