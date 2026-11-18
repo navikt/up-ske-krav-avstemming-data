@@ -38,6 +38,7 @@ server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
+
 server.use(
 	basePath,
 	expressStaticGzip(buildPath, {
@@ -45,5 +46,7 @@ server.use(
 		orderPreference: ["br"],
 	}),
 );
+// biome-ignore lint/suspicious/noConsole: server startup
+console.log(`Starting server with base path ${basePath} and build path ${buildPath}`);
 // biome-ignore lint/suspicious/noConsole: server startup
 server.listen(8080, () => console.log("Server listening on port 8080"));
