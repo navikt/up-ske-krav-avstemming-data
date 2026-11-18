@@ -42,6 +42,7 @@ export default defineConfig(({ mode }) => ({
 			...(mode === "mock" && {
 				"/mockServiceWorker.js": {
 					target: "http://localhost:5173",
+					rewrite: () => "/ske-krav-avstemming-data/mockServiceWorker.js",
 				},
 			}),
 		},
