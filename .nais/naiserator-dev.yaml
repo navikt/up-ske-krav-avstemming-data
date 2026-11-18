@@ -9,14 +9,14 @@ spec:
   image: "{{ image }}"
   port: 8080
   liveness:
-    path: /up-ske-krav-avstemming-data/internal/isAlive
+    path: /ske-krav-avstemming-data/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /up-ske-krav-avstemming-data/internal/isReady
+    path: /ske-krav-avstemming-data/internal/isReady
     initialDelay: 10
   prometheus:
     enabled: true
-    path: /up-ske-krav-avstemming-data/internal/metrics
+    path: /ske-krav-avstemming-data/internal/metrics
   replicas:
     min: 1
     max: 2

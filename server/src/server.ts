@@ -2,7 +2,7 @@ import path from "node:path";
 import express, { type Request, type Response } from "express";
 import expressStaticGzip from "express-static-gzip";
 
-const basePath = "/up-ske-krav-avstemming-data";
+const basePath = "/ske-krav-avstemming-data";
 const buildPath = path.resolve(import.meta.dirname, "../dist");
 const server = express();
 
@@ -30,14 +30,6 @@ server.use((req, res, next) => {
 	next();
 });
 
-server.use(
-	basePath,
-	expressStaticGzip(buildPath, {
-		enableBrotli: true,
-		orderPreference: ["br"],
-	}),
-);
-
 server.get(`${basePath}/internal/isAlive`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
@@ -46,5 +38,12 @@ server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
+server.use(
+	basePath,
+	expressStaticGzip(buildPath, {
+		enableBrotli: true,
+		orderPreference: ["br"],
+	}),
+);
 // biome-ignore lint/suspicious/noConsole: server startup
 server.listen(8080, () => console.log("Server listening on port 8080"));

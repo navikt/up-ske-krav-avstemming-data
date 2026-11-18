@@ -1,10 +1,10 @@
-import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import {resolve} from "node:path";
 
 export default defineConfig(({ mode }) => ({
-	base: "/up-ske-krav-avstemming-data",
+	base: "/ske-krav-avstemming-data",
 	build: {
 		copyPublicDir: false,
 		rolldownOptions: {
@@ -31,10 +31,10 @@ export default defineConfig(({ mode }) => ({
 	server: {
 		proxy: {
 			...(mode === "backend" && {
-				"/up-ske-krav-avstemming-data/ske-krav/api": {
+				"/ske-krav/api": {
 					target: "http://localhost:8080",
 					rewrite: (path: string) =>
-						path.replace(/^\/up-ske-krav-avstemming-data\/ske-krav/, ""),
+						path.replace(/ske-krav/, ""),
 					changeOrigin: true,
 					secure: false,
 				},
@@ -42,7 +42,6 @@ export default defineConfig(({ mode }) => ({
 			...(mode === "mock" && {
 				"/mockServiceWorker.js": {
 					target: "http://localhost:5173",
-					rewrite: () => "/up-ske-krav-avstemming-data/mockServiceWorker.js",
 				},
 			}),
 		},
