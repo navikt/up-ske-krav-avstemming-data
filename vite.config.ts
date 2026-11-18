@@ -12,18 +12,18 @@ export default defineConfig(({ mode }) => ({
 	server: {
 		proxy: {
 			...(mode === "backend" && {
-				"/ske-krav-avstemming-data/ske-krav/api": {
+				"/ske-krav/api": {
 					target: "http://localhost:8080",
 					rewrite: (path: string) =>
-						path.replace(/^\/ske-krav-avstemming-data\/ske-krav/, ""),
+						path.replace(/ske-krav/, ""),
 					changeOrigin: true,
 					secure: false,
 				},
 			}),
 			...(mode === "mock" && {
-				"/ske-krav-avstemming-data/mockServiceWorker.js": {
+				"/mockServiceWorker.js": {
 					target: "http://localhost:5173",
-					rewrite: () => "/ske-krav-avstemming-data/mockServiceWorker.js",
+					rewrite: () => "/mockServiceWorker.js",
 				},
 			}),
 		},
