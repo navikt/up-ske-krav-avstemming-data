@@ -6,7 +6,7 @@ import expressStaticGzip from "express-static-gzip";
 import { backendConfig } from "./backendConfig.js";
 import { getServerSideEnvironment } from "./environment.js";
 
-const basePath = "/up-ske-krav-avstemming-data";
+const basePath = "/ske-krav-avstemming-data";
 const buildPath = path.resolve(import.meta.dirname, "../dist");
 const serverStandalone = express();
 const env = getServerSideEnvironment();
