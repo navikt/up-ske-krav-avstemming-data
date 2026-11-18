@@ -56,15 +56,12 @@ server.use(`/ske-krav`, async (req, res, next) => {
 		return;
 	}
 
-	console.log(`Original backende url: ${apiTarget.href}${req.url}`)
-	console.log(`Proxying request to ${apiTarget.href}${req.url.replace(/^\/ske-krav-avstemming-data/, "")}`,)
-	
 	const proxyRequest = https.request(
 		{
 			protocol: apiTarget.protocol,
 			hostname: apiTarget.hostname,
 			method: req.method,
-			path: req.url.replace(/^\/ske-krav-avstemming-data/, ""),
+			path: req.url.replace(/^\/ske-krav-avstemming-data\/ske-krav/, ""),
 			headers: {
 				...req.headers,
 				authorization: `Bearer ${oboTokenResult.token}`,
