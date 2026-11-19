@@ -30,6 +30,14 @@ server.use((req, res, next) => {
 	next();
 });
 
+server.use(
+	basePath,
+	expressStaticGzip(buildPath, {
+		enableBrotli: true,
+		orderPreference: ["br"],
+	}),
+);
+
 server.get(`${basePath}/internal/isAlive`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
@@ -38,14 +46,6 @@ server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
-
-server.use(
-	basePath,
-	expressStaticGzip(buildPath, {
-		enableBrotli: true,
-		orderPreference: ["br"],
-	}),
-);
 // biome-ignore lint/suspicious/noConsole: server startup
 console.log(`Starting server with base path ${basePath} and build path ${buildPath}`);
 // biome-ignore lint/suspicious/noConsole: server startup
