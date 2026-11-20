@@ -1,22 +1,13 @@
-import https from "node:https";
 import path from "node:path";
-import { getToken, requestOboToken } from "@navikt/oasis";
 import express, { type Request, type Response } from "express";
 import expressStaticGzip from "express-static-gzip";
-import { backendConfig } from "./backendConfig.js";
-import { getServerSideEnvironment } from "./environment.js";
 
-const basePath = "/ske-krav-avstemming-data";
+const basePath = "/up-ske-krav-avstemming-data";
 const buildPath = path.resolve(import.meta.dirname, "../dist");
 const server = express();
-const env = getServerSideEnvironment();
-
-const backend = backendConfig[env];
-const apiTarget = new URL(backend.url);
-const oboAudience = backend.audience;
 
 const corsAllowedOrigins: (string | RegExp)[] = [
-	/^https:\/\/sokos-ske-krav(?:-q[a-z0-9]+)?\.(?:ansatt|intern)(?:\.dev)?\.nav\.no$/,
+	/^https:\/\/utbetalingsportalen(?:-q[a-z0-9]+)?\.(?:ansatt|intern)(?:\.dev)?\.nav\.no$/,
 	"http://localhost:5173",
 ];
 
@@ -39,68 +30,13 @@ server.use((req, res, next) => {
 	next();
 });
 
-server.use(`/ske-krav`, async (req, res, next) => {
-	const incomingToken = getToken(req);
-	if (!incomingToken) {
-		res.status(401).json({ message: "Mangler innkommende brukertoken" });
-		return;
-	}
-
-	const oboTokenResult = await requestOboToken(
-		incomingToken,
-		oboAudience,
-	);
-
-	if (!oboTokenResult.ok) {
-		next(oboTokenResult.error);
-		return;
-	}
-
-	const proxyRequest = https.request(
-		{
-			protocol: apiTarget.protocol,
-			hostname: apiTarget.hostname,
-			method: req.method,
-			path: req.url.replace(/^\/ske-krav-avstemming-data\/ske-krav/, ""),
-			headers: {
-				...req.headers,
-				authorization: `Bearer ${oboTokenResult.token}`,
-				host: apiTarget.host,
-			},
-		},
-		(proxyResponse) => {
-			res.status(proxyResponse.statusCode ?? 502);
-			for (const [key, value] of Object.entries(proxyResponse.headers)) {
-				if (value !== undefined) {
-					res.setHeader(key, value);
-				}
-			}
-			proxyResponse.pipe(res);
-		},
-	);
-
-	proxyRequest.setTimeout(30_000, () => {
-		proxyRequest.destroy(new Error("Upstream timeout"));
-	});
-
-	proxyRequest.on("error", (error) => {
-		if (res.headersSent) {
-			next(error);
-			return;
-		}
-		if (error.message === "Upstream timeout") {
-			res.status(504).json({ message: "Timeout mot backend" });
-			return;
-		}
-		res.status(502).json({ message: "Feil ved kall mot backend" });
-	});
-
-	req.on("aborted", () => {
-		proxyRequest.destroy();
-	});
-
-	req.pipe(proxyRequest);
-});
+server.use(
+	basePath,
+	expressStaticGzip(buildPath, {
+		enableBrotli: true,
+		orderPreference: ["br"],
+	}),
+);
 
 server.get(`${basePath}/internal/isAlive`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
@@ -110,13 +46,7 @@ server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
-server.use(
-	basePath,
-	expressStaticGzip(buildPath, {
-		enableBrotli: true,
-		orderPreference: ["br"],
-	}),
-);
-//foo 
+// biome-ignore lint/suspicious/noConsole: server startup
+console.log(`Starting server with base path ${basePath} and build path ${buildPath}`);
 // biome-ignore lint/suspicious/noConsole: server startup
 server.listen(8080, () => console.log("Server listening on port 8080"));

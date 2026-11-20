@@ -1,9 +1,28 @@
 import react from "@vitejs/plugin-react";
 import {defineConfig} from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import {resolve} from "node:path";
 
 export default defineConfig(({ mode }) => ({
 	base: "/ske-krav-avstemming-data",
+	build: {
+		copyPublicDir: false,
+		rolldownOptions: {
+			input: resolve(import.meta.dirname, "src/App.tsx"),
+			preserveEntrySignatures: "exports-only",
+			external: [
+				"react",
+				"react/jsx-runtime",
+				"react-dom",
+				"react-dom/client",
+				"scheduler",
+			],
+			output: {
+				entryFileNames: "bundle.js",
+				format: "esm",
+			},
+		},
+	},
 	css: {
 		modules: {
 			generateScopedName: "[name]__[local]___[hash:base64:5]",
@@ -23,7 +42,7 @@ export default defineConfig(({ mode }) => ({
 			...(mode === "mock" && {
 				"/mockServiceWorker.js": {
 					target: "http://localhost:5173",
-					rewrite: () => "/mockServiceWorker.js",
+					rewrite: () => "/ske-krav-avstemming-data/mockServiceWorker.js",
 				},
 			}),
 		},
