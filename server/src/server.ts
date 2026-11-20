@@ -55,10 +55,6 @@ server.use(`${basePath}/ske-krav`, async (req, res, next) => {
 		next(oboTokenResult.error);
 		return;
 	}
-
-	console.info("hostname: ", apiTarget.hostname)
-	console.info(`original url: `, req.url)
-	
 	
 	const proxyRequest = https.request(
 		{
