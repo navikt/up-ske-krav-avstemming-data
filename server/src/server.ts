@@ -6,7 +6,7 @@ import expressStaticGzip from "express-static-gzip";
 import { backendConfig } from "./backendConfig.js";
 import { getServerSideEnvironment } from "./environment.js";
 
-const basePath = "/up-ske-krav-avstemming-data";
+const basePath = "/ske-krav-avstemming-data";
 const buildPath = path.resolve(import.meta.dirname, "../dist");
 const server = express();
 const env = getServerSideEnvironment();
@@ -39,7 +39,7 @@ server.use((req, res, next) => {
 	next();
 });
 
-server.use(`${basePath}/ske-krav`, async (req, res, next) => {
+server.use(`/ske-krav`, async (req, res, next) => {
 	const incomingToken = getToken(req);
 	if (!incomingToken) {
 		res.status(401).json({ message: "Mangler innkommende brukertoken" });
@@ -56,16 +56,12 @@ server.use(`${basePath}/ske-krav`, async (req, res, next) => {
 		return;
 	}
 
-	console.info("hostname: ", apiTarget.hostname)
-	console.info(`original url: `, req.url)
-	
-	
 	const proxyRequest = https.request(
 		{
 			protocol: apiTarget.protocol,
 			hostname: apiTarget.hostname,
 			method: req.method,
-			path: req.url,
+			path: req.url.replace(/^\/ske-krav-avstemming-data\/ske-krav/, ""),
 			headers: {
 				...req.headers,
 				authorization: `Bearer ${oboTokenResult.token}`,
