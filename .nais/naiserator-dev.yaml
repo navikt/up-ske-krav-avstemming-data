@@ -9,20 +9,20 @@ spec:
   image: "{{ image }}"
   port: 8080
   liveness:
-    path: /avstemmingsdata-fra-ske-krav-bundle/internal/isAlive
+    path: /up-ske-krav-avstemming-data/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /avstemmingsdata-fra-ske-krav-bundle/internal/isReady
+    path: /up-ske-krav-avstemming-data/internal/isReady
     initialDelay: 10
   prometheus:
     enabled: true
-    path: /avstemmingsdata-fra-ske-krav-bundle/internal/metrics
+    path: /up-ske-krav-avstemming-data/internal/metrics
   replicas:
     min: 1
     max: 2
   ingresses:
-    - "https://utbetalingsportalen.intern.dev.nav.no/avstemmingsdata-fra-ske-krav-bundle"
-    - "https://utbetalingsportalen.ansatt.dev.nav.no/avstemmingsdata-fra-ske-krav-bundle"
+    - "https://utbetalingsportalen.intern.dev.nav.no/up-ske-krav-avstemming-data"
+    - "https://utbetalingsportalen.ansatt.dev.nav.no/up-ske-krav-avstemming-data"
   resources:
     limits:
       memory: 512Mi
