@@ -55,8 +55,6 @@ export default function AvstemmingDataPage() {
                         <Table.HeaderCell scope="col">Beløp</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Renter</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Total sum</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Behandlende enhet</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Bostedsenhet</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Ytelseskode</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Lovhjemmel</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Årsakskode</Table.HeaderCell>
@@ -78,8 +76,6 @@ export default function AvstemmingDataPage() {
                             <Table.DataCell>{krav.belop}</Table.DataCell>
                             <Table.DataCell>{krav.renter}</Table.DataCell>
                             <Table.DataCell>{krav.totalSum}</Table.DataCell>
-                            <Table.DataCell>{krav.behandlendeEnhet}</Table.DataCell>
-                            <Table.DataCell>{krav.bostedEnhet}</Table.DataCell>
                             <Table.DataCell>{krav.ytelseKode}</Table.DataCell>
                             <Table.DataCell>{krav.lovHjemmel}</Table.DataCell>
                             <Table.DataCell>{krav.arsaksKode}</Table.DataCell>
