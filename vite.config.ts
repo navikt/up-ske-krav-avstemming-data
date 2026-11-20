@@ -4,7 +4,7 @@ import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import {resolve} from "node:path";
 
 export default defineConfig(({ mode }) => ({
-	base: "/ske-krav-avstemming-data",
+	base: "/avstemmingsdata-fra-ske-krav",
 	build: {
 		copyPublicDir: false,
 		rolldownOptions: {
@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => ({
 			...(mode === "mock" && {
 				"/mockServiceWorker.js": {
 					target: "http://localhost:5173",
-					rewrite: () => "/ske-krav-avstemming-data/mockServiceWorker.js",
+					rewrite: () => "/avstemmingsdata-fra-ske-krav/mockServiceWorker.js",
 				},
 			}),
 		},
