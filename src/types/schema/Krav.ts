@@ -8,8 +8,6 @@ export const KravDTOSchema = z.object({
 	belop: z.number(),
 	renter: z.number(),
 	totalSum: z.number(),
-	behandlendeEnhet: z.string(),
-	bostedEnhet: z.string(),
 	ytelseKode: z.string(),
 	lovHjemmel: z.string(),
 	arsaksKode: z.string(),
