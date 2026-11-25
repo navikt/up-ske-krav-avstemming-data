@@ -1,27 +1,30 @@
 import type { KravDto } from "../types/schema/Krav";
 import { toLocalShortDate } from "./dates";
 
-function createCsv(krav: Array<KravDto>) {
+export function createCsv(krav: Array<KravDto>) {
 	const csvHeaders = [
 		"Gjelder-ID",
 		"Vedtaksdato",
 		"Saksnummer",
+		"Kravidentifikator",
+		"Fagsystem-ID",
 		"Referanse gammelt vedtak",
 		"Beløp",
 		"Renter",
 		"Total sum",
+		"Behandlende enhet",
 		"Ytelseskode",
 		"Lovhjemmel",
 		"Årsakskode",
-		"Vedtak fra dato",
-		"Vedtak til dato",
-		"Transaksjonsdato",
-		"Datafil",
-		"Kilde",
+		"Periode fra dato",
+		"Periode til dato",
+		"Dato sendt",
+		"Filnavn",
+		"Avsender",
 	].join(";");
 
 	const csvValue = (value: string | number) => {
-		const text = value ? `${value}` : "";
+		const text = `${value}`;
 		return /[;"\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 	};
 
@@ -30,18 +33,21 @@ function createCsv(krav: Array<KravDto>) {
 			k.gjelderID,
 			k.vedtaksDato,
 			k.saksnummer,
+			k.kravidentifikator,
+			k.fagsystemID,
 			k.referanseGammeltVedtak,
 			k.belop,
 			k.renter,
 			k.totalSum,
+			k.behandlendeEnhet,
 			k.ytelseKode,
 			k.lovHjemmel,
 			k.arsaksKode,
-			k.vedtakFraDato,
-			k.vedtakTilDato,
-			k.transaksjonsDato,
-			k.datafil,
-			k.kilde,
+			k.periodeFraDato,
+			k.periodeTilDato,
+			k.datoSendt,
+			k.filnavn,
+			k.avsender,
 		]
 			.map(csvValue)
 			.join(";"),

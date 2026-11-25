@@ -26,7 +26,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: "http://localhost:5173/ske-krav-avstemming-data",
+		baseURL: "http://localhost:5173/avstemmingsdata-fra-ske-krav/",
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on",
@@ -46,7 +46,7 @@ export default defineConfig({
 	],
 	webServer: {
 		command: "pnpm run dev",
-		url: "http://localhost:5173/ske-krav-avstemming-data",
+		url: "http://localhost:5173/avstemmingsdata-fra-ske-krav/",
 		reuseExistingServer: !process.env.CI,
 	},
 });
