@@ -51,39 +51,48 @@ export default function AvstemmingDataPage() {
                         <Table.HeaderCell scope="col">Gjelder-ID</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Vedtaksdato</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Saksnummer</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Kravidentifikator</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Fagsystem-ID</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Referanse gammelt vedtak</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Beløp</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Renter</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Total sum</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Behandlende enhet</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Ytelseskode</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Lovhjemmel</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Årsakskode</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Vedtak fra dato</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Vedtak til dato</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Transaksjonsdato</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Datafil</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Kilde</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Periode fra dato</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Periode til dato</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Dato sendt</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Filnavn</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Avsender</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body >
-                    {data?.map((krav) => (
-                        <Table.Row key={`${krav.datafil}-${krav.saksnummer}`}>
+                    {data?.map((krav, index) => (
+                        
+                        <Table.Row key={`${krav.kravidentifikator}-${
+                            // biome-ignore lint/suspicious/noArrayIndexKey: Kravid er nesten nok, men ikke helt og det er ikke noe annet vi kan kombinere med for å være sikker på at det er en primærnøkkel
+                            index}`}>
                             <Table.DataCell>{krav.gjelderID}</Table.DataCell>
                             <Table.DataCell>{krav.vedtaksDato}</Table.DataCell>
                             <Table.DataCell>{krav.saksnummer}</Table.DataCell>
+                            <Table.DataCell>{krav.kravidentifikator}</Table.DataCell>
+                            <Table.DataCell>{krav.fagsystemID}</Table.DataCell>
                             <Table.DataCell>{krav.referanseGammeltVedtak}</Table.DataCell>
                             <Table.DataCell>{krav.belop}</Table.DataCell>
                             <Table.DataCell>{krav.renter}</Table.DataCell>
                             <Table.DataCell>{krav.totalSum}</Table.DataCell>
+                            <Table.DataCell>{krav.behandlendeEnhet}</Table.DataCell>
                             <Table.DataCell>{krav.ytelseKode}</Table.DataCell>
                             <Table.DataCell>{krav.lovHjemmel}</Table.DataCell>
                             <Table.DataCell>{krav.arsaksKode}</Table.DataCell>
-                            <Table.DataCell>{krav.vedtakFraDato}</Table.DataCell>
-                            <Table.DataCell>{krav.vedtakTilDato}</Table.DataCell>
-                            <Table.DataCell>{krav.transaksjonsDato}</Table.DataCell>
-                            <Table.DataCell>{krav.datafil}</Table.DataCell>
-                            <Table.DataCell>{krav.kilde}</Table.DataCell>
+                            <Table.DataCell>{krav.periodeFraDato}</Table.DataCell>
+                            <Table.DataCell>{krav.periodeTilDato}</Table.DataCell>
+                            <Table.DataCell>{krav.datoSendt}</Table.DataCell>
+                            <Table.DataCell>{krav.filnavn}</Table.DataCell>
+                            <Table.DataCell>{krav.avsender}</Table.DataCell>
                         </Table.Row>
                     ))}
                 </Table.Body>

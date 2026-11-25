@@ -1,33 +1,54 @@
-import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import {defineConfig, esmExternalRequirePlugin} from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import {resolve} from "node:path";
 
-export default defineConfig(({ mode }) => ({
-	base: "/up-ske-krav-avstemming-data",
-	css: {
-		modules: {
-			generateScopedName: "[name]__[local]___[hash:base64:5]",
-		},
-	},
-	server: {
-		proxy: {
-			...(mode === "backend" && {
-				"/up-ske-krav-avstemming-data/ske-krav/api": {
-					target: "http://localhost:8080",
-					rewrite: (path: string) =>
-						path.replace(/^\/up-ske-krav-avstemming-data\/ske-krav/, ""),
-					changeOrigin: true,
-					secure: false,
-				},
-			}),
-			...(mode === "mock" && {
-				"/mockServiceWorker.js": {
-					target: "http://localhost:5173",
-					rewrite: () => "/mockServiceWorker.js",
-				},
-			}),
-		},
-	},
-	plugins: [react(), cssInjectedByJsPlugin()],
+export default defineConfig(({mode}) => ({
+    base: "/avstemmingsdata-fra-ske-krav",
+    build: {
+        rollupOptions: {
+            input: resolve(import.meta.dirname, "src/App.tsx"),
+            preserveEntrySignatures: "exports-only",
+            plugins: [
+                esmExternalRequirePlugin({
+                    external: [
+                        "react",
+                        "react/jsx-runtime",
+                        "react-dom",
+                        "react-dom/client",
+                        "scheduler",
+                    ],
+                }),
+            ],
+            output: {
+                entryFileNames: "bundle.js",
+                format: "esm",
+            },
+        },
+    },
+    css: {
+        modules: {
+            generateScopedName: "[name]__[local]___[hash:base64:5]",
+        },
+    },
+    server: {
+        proxy: {
+            ...(mode === "backend" && {
+                "/ske-krav/api": {
+                    target: "http://localhost:8080",
+                    rewrite: (path: string) =>
+                        path.replace(/ske-krav/, ""),
+                    changeOrigin: true,
+                    secure: false,
+                },
+            }),
+            ...(mode === "mock" && {
+                "/mockServiceWorker.js": {
+                    target: "http://localhost:5173",
+                    rewrite: () => "/avstemmingsdata-fra-ske-krav/mockServiceWorker.js",
+                },
+            }),
+        },
+    },
+    plugins: [react(), cssInjectedByJsPlugin()],
 }));
